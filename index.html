@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Choose Your Career Research Step</title>
+
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f4f4;
+    color: #222;
+    line-height: 1.5;
+  }
+
+  .app {
+    max-width: 720px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: #fff;
+    padding: 24px;
+  }
+
+  .topbar {
+    height: 6px;
+    background: #ffcd00;
+    margin: -24px -24px 28px;
+  }
+
+  .progress {
+    font-size: 14px;
+    font-weight: 700;
+    color: #555;
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-size: 30px;
+    line-height: 1.15;
+    margin: 0 0 10px;
+  }
+
+  h2 {
+    font-size: 25px;
+    line-height: 1.2;
+    margin: 0 0 10px;
+  }
+
+  .intro {
+    font-size: 18px;
+    margin-bottom: 26px;
+  }
+
+  .note {
+    background: #fff8d6;
+    border-left: 5px solid #ffcd00;
+    padding: 14px 16px;
+    margin: 22px 0;
+    border-radius: 4px;
+  }
+
+  .choices {
+    display: grid;
+    gap: 12px;
+    margin: 22px 0;
+  }
+
+  button,
+  .resource-link {
+    width: 100%;
+    border: 2px solid #222;
+    background: #fff;
+    color: #222;
+    padding: 16px;
+    border-radius: 9px;
+    font-size: 17px;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+  }
+
+  button:hover,
+  button:focus,
+  .resource-link:hover,
+  .resource-link:focus {
+    background: #fff8d6;
+    outline: 3px solid transparent;
+  }
+
+  button.selected {
+    background: #ffcd00;
+    border-color: #000;
+  }
+
+  .primary {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+    text-align: center;
+  }
+
+  .primary:hover,
+  .primary:focus {
+    background: #333;
+  }
+
+  .secondary {
+    text-align: center;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 14px;
+    font-size: 17px;
+    border: 2px solid #777;
+    border-radius: 7px;
+    margin: 8px 0 18px;
+    font-family: inherit;
+  }
+
+  label {
+    display: block;
+    font-weight: 700;
+    margin-top: 18px;
+  }
+
+  .resource {
+    border: 1px solid #ccc;
+    padding: 17px;
+    border-radius: 9px;
+    margin-bottom: 14px;
+  }
+
+  .resource h3 {
+    margin: 0 0 6px;
+    font-size: 19px;
+  }
+
+  .resource p {
+    margin: 0 0 12px;
+  }
+
+  .resource-link {
+    padding: 11px 14px;
+    font-size: 16px;
+    background: #ffcd00;
+  }
+
+  .small {
+    font-size: 14px;
+    color: #555;
+  }
+
+  .screen {
+    display: none;
+  }
+
+  .screen.active {
+    display: block;
+  }
+
+  .nav {
+    display: flex;
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  .nav button {
+    text-align: center;
+  }
+
+  .result {
+    background: #f4f4f4;
+    border: 2px solid #222;
+    padding: 20px;
+    border-radius: 9px;
+    font-size: 18px;
+    margin: 22px 0;
+  }
+
+  .success {
+    display: none;
+    text-align: center;
+    font-weight: 700;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 600px) {
+    .app { padding: 20px; }
+    .topbar { margin: -20px -20px 24px; }
+    h1 { font-size: 27px; }
+    .nav { flex-direction: column-reverse; }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="app">
+<div class="topbar"></div>
+
+<!-- SCREEN 1 -->
+<section class="screen active" id="screen1">
+
+  <div class="progress">STEP 1 OF 3</div>
+
+  <h1>Choose one career to explore</h1>
+
+  <p class="intro">
+    You are not choosing your future career. You are choosing one possibility worth learning more about.
+  </p>
+
+  <h2>Do you already have a career in mind?</h2>
+
+  <div class="choices">
+    <button onclick="showKnownCareer()">Yes — I have one</button>
+    <button onclick="showResources()">Not yet — help me find one</button>
+  </div>
+
+  <div id="knownCareer" style="display:none;">
+    <label for="career1">What career do you want to research?</label>
+    <input id="career1" type="text" placeholder="Example: school counselor">
+
+    <button class="primary" onclick="saveCareer('career1')">
+      Continue →
+    </button>
+  </div>
+
+  <div id="resources" style="display:none;">
+
+    <div class="note">
+      <strong>Choose just one.</strong> Spend a few minutes looking for a career that makes you curious enough to learn more.
+    </div>
+
+    <div class="resource">
+      <h3>Start Somewhere</h3>
+      <p>
+        Best if you're not sure where to begin. React to different kinds of work and get a few directions to explore.
+      </p>
+      <a class="resource-link"
+         href="https://uiowa.instructure.com/courses/287980/pages/find-careers-to-explore"
+         target="_blank" rel="noopener">
+        Open Start Somewhere ↗
+      </a>
+    </div>
+
+    <div class="resource">
+      <h3>YouScience</h3>
+      <p>
+        Look at careers connected to your results. Use <strong>Career Cluster</strong> on the left side to make the list easier to narrow.
+      </p>
+      <a class="resource-link"
+         href="https://apps.youscience.com/en/careers"
+         target="_blank" rel="noopener">
+        Open My YouScience Careers ↗
+      </a>
+    </div>
+
+    <div class="resource">
+      <h3>What Can I Do With This Major?</h3>
+      <p>
+        Best if you want career ideas related to a major. Open our page, then follow the <strong>What Can I Do With This Major?</strong> link.
+      </p>
+      <a class="resource-link"
+         href="https://careers.uiowa.edu/explore#wcidwtm"
+         target="_blank" rel="noopener">
+        Explore Careers by Major ↗
+      </a>
+    </div>
+
+    <label for="career2">Found one? What career will you explore?</label>
+    <input id="career2" type="text" placeholder="Enter one career">
+
+    <button class="primary" onclick="saveCareer('career2')">
+      I have my career →
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- SCREEN 2 -->
+<section class="screen" id="screen2">
+
+  <div class="progress">STEP 2 OF 3</div>
+
+  <h1>What do you most want to figure out?</h1>
+
+  <p class="intro">
+    Think about what would actually help you decide whether this career deserves another look.
+  </p>
+
+  <div class="choices" id="goalChoices">
+
+    <button onclick="chooseGoal(this,
+      'what the day-to-day work is really like')">
+      What is the day-to-day work really like?
+    </button>
+
+    <button onclick="chooseGoal(this,
+      'whether I would enjoy the work')">
+      Would I actually enjoy the work?
+    </button>
+
+    <button onclick="chooseGoal(this,
+      'whether the work environment would fit me')">
+      Would the work environment fit me?
+    </button>
+
+    <button onclick="chooseGoal(this,
+      'what skills and strengths I would use')">
+      What skills or strengths would I use?
+    </button>
+
+    <button onclick="chooseGoal(this,
+      'what education or experience I would need')">
+      What preparation would I need?
+    </button>
+
+    <button onclick="chooseGoal(this,
+      'what might make this career a good or poor fit for me')">
+      What might make this a good—or poor—fit?
+    </button>
+
+    <button onclick="showCustomGoal(this)">
+      I want to figure out something else
+    </button>
+
+  </div>
+
+  <div id="customGoalWrap" style="display:none;">
+    <label for="customGoal">What do you want to figure out?</label>
+    <input id="customGoal" type="text"
+           placeholder="Write a short question or goal">
+  </div>
+
+  <div class="nav">
+    <button class="secondary" onclick="goTo(1)">← Back</button>
+    <button class="primary" onclick="saveGoal()">Continue →</button>
+  </div>
+
+</section>
+
+
+<!-- SCREEN 3 -->
+<section class="screen" id="screen3">
+
+  <div class="progress">STEP 3 OF 3</div>
+
+  <h1>What could help you decide?</h1>
+
+  <p class="intro">
+    Online research gives you information. A person or experience can help you get closer to what the career is actually like.
+  </p>
+
+  <h2>Which kind of next step sounds most useful?</h2>
+
+  <div class="choices">
+    <button id="personBtn" onclick="chooseNextType('person')">
+      👤 Learn from a person
+    </button>
+
+    <button id="experienceBtn" onclick="chooseNextType('experience')">
+      🚶 Learn from an experience
+    </button>
+  </div>
+
+  <div id="personArea" style="display:none;">
+    <div class="note">
+      Examples: a professional, alum, professor, someone you know, or someone working at an organization that interests you.
+    </div>
+
+    <label for="personText">
+      Who could you learn from?
+    </label>
+
+    <input id="personText" type="text"
+           placeholder="Example: a school counselor">
+  </div>
+
+  <div id="experienceArea" style="display:none;">
+    <div class="note">
+      Examples: job shadowing, volunteering, a related job, research, a student organization, an employer event, or a small related project.
+    </div>
+
+    <label for="experienceText">
+      What experience could help?
+    </label>
+
+    <input id="experienceText" type="text"
+           placeholder="Example: shadow a physical therapist">
+  </div>
+
+  <div class="nav">
+    <button class="secondary" onclick="goTo(2)">← Back</button>
+    <button class="primary" onclick="createPlan()">Build My Plan →</button>
+  </div>
+
+</section>
+
+
+<!-- FINAL SCREEN -->
+<section class="screen" id="screen4">
+
+  <div class="progress">YOUR PLAN</div>
+
+  <h1>You have a next step.</h1>
+
+  <p class="intro">
+    You do not have to know whether this career is right for you yet. This gives you something specific to investigate.
+  </p>
+
+  <div class="result" id="resultText"></div>
+
+  <button class="primary" onclick="copyPlan()">
+    Copy My Response
+  </button>
+
+  <div class="success" id="copySuccess">
+    ✓ Copied! Paste this into your assignment.
+  </div>
+
+  <div class="note">
+    What you learn might make you <strong>more interested</strong>,
+    <strong>less interested</strong>, or <strong>still unsure</strong>.
+    All three give you useful information.
+  </div>
+
+  <p style="text-align:center; font-size:18px;">
+    <strong>Explore → Take a step → Notice → Re-evaluate</strong>
+  </p>
+
+  <button class="secondary" onclick="startOver()">
+    Start Over
+  </button>
+
+</section>
+
+</div>
+
+
+<script>
+let career = "";
+let goal = "";
+let nextType = "";
+let nextStep = "";
+let customGoalSelected = false;
+
+function showKnownCareer() {
+  document.getElementById("knownCareer").style.display = "block";
+  document.getElementById("resources").style.display = "none";
+}
+
+function showResources() {
+  document.getElementById("resources").style.display = "block";
+  document.getElementById("knownCareer").style.display = "none";
+}
+
+function saveCareer(id) {
+  const value = document.getElementById(id).value.trim();
+
+  if (!value) {
+    alert("Enter one career before continuing.");
+    return;
+  }
+
+  career = value;
+  goTo(2);
+}
+
+function chooseGoal(button, value) {
+  document.querySelectorAll("#goalChoices button").forEach(btn => {
+    btn.classList.remove("selected");
+  });
+
+  button.classList.add("selected");
+  goal = value;
+  customGoalSelected = false;
+  document.getElementById("customGoalWrap").style.display = "none";
+}
+
+function showCustomGoal(button) {
+  document.querySelectorAll("#goalChoices button").forEach(btn => {
+    btn.classList.remove("selected");
+  });
+
+  button.classList.add("selected");
+  goal = "";
+  customGoalSelected = true;
+  document.getElementById("customGoalWrap").style.display = "block";
+  document.getElementById("customGoal").focus();
+}
+
+function saveGoal() {
+
+  if (customGoalSelected) {
+    goal = document.getElementById("customGoal").value.trim();
+  }
+
+  if (!goal) {
+    alert("Choose what you most want to figure out.");
+    return;
+  }
+
+  goTo(3);
+}
+
+function chooseNextType(type) {
+  nextType = type;
+
+  document.getElementById("personBtn").classList.remove("selected");
+  document.getElementById("experienceBtn").classList.remove("selected");
+
+  document.getElementById("personArea").style.display = "none";
+  document.getElementById("experienceArea").style.display = "none";
+
+  if (type === "person") {
+    document.getElementById("personBtn").classList.add("selected");
+    document.getElementById("personArea").style.display = "block";
+    document.getElementById("personText").focus();
+  } else {
+    document.getElementById("experienceBtn").classList.add("selected");
+    document.getElementById("experienceArea").style.display = "block";
+    document.getElementById("experienceText").focus();
+  }
+}
+
+function createPlan() {
+
+  if (!nextType) {
+    alert("Choose a person or an experience.");
+    return;
+  }
+
+  if (nextType === "person") {
+    nextStep = document.getElementById("personText").value.trim();
+  } else {
+    nextStep = document.getElementById("experienceText").value.trim();
+  }
+
+  if (!nextStep) {
+    alert("Add a short description of your next step.");
+    return;
+  }
+
+  const plan =
+    `I'm researching ${career} because I want to figure out ${goal}. ` +
+    `One ${nextType} that could help me decide whether to keep exploring this career is ${nextStep}.`;
+
+  document.getElementById("resultText").textContent = plan;
+
+  goTo(4);
+}
+
+function copyPlan() {
+  const text = document.getElementById("resultText").textContent;
+
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById("copySuccess").style.display = "block";
+  });
+}
+
+function goTo(number) {
+  document.querySelectorAll(".screen").forEach(screen => {
+    screen.classList.remove("active");
+  });
+
+  document.getElementById("screen" + number).classList.add("active");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function startOver() {
+  career = "";
+  goal = "";
+  nextType = "";
+  nextStep = "";
+  customGoalSelected = false;
+
+  document.querySelectorAll("input").forEach(input => input.value = "");
+  document.querySelectorAll("button").forEach(button => {
+    button.classList.remove("selected");
+  });
+
+  document.getElementById("knownCareer").style.display = "none";
+  document.getElementById("resources").style.display = "none";
+  document.getElementById("customGoalWrap").style.display = "none";
+  document.getElementById("personArea").style.display = "none";
+  document.getElementById("experienceArea").style.display = "none";
+  document.getElementById("copySuccess").style.display = "none";
+
+  goTo(1);
+}
+</script>
+
+</body>
+</html>
