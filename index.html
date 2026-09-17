@@ -3,200 +3,244 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Choose Your Career Research Step</title>
+<title>Choose Your Career Research Direction</title>
 
 <style>
-  * { box-sizing: border-box; }
+* { box-sizing: border-box; }
 
-  body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f4f4f4;
-    color: #222;
-    line-height: 1.5;
-  }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f4f4;
+  color: #222;
+  line-height: 1.5;
+}
 
-  .app {
-    max-width: 720px;
-    margin: 0 auto;
-    min-height: 100vh;
-    background: #fff;
-    padding: 24px;
-  }
+.app {
+  max-width: 760px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: #fff;
+  padding: 24px;
+}
 
-  .topbar {
-    height: 6px;
-    background: #ffcd00;
-    margin: -24px -24px 28px;
-  }
+.topbar {
+  height: 7px;
+  background: #ffcd00;
+  margin: -24px -24px 28px;
+}
 
-  .progress {
-    font-size: 14px;
-    font-weight: 700;
-    color: #555;
-    margin-bottom: 8px;
-  }
+.progress {
+  font-size: 13px;
+  font-weight: 700;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  margin-bottom: 8px;
+}
 
-  h1 {
-    font-size: 30px;
-    line-height: 1.15;
-    margin: 0 0 10px;
-  }
+h1 {
+  font-size: 30px;
+  line-height: 1.15;
+  margin: 0 0 12px;
+}
 
-  h2 {
-    font-size: 25px;
-    line-height: 1.2;
-    margin: 0 0 10px;
-  }
+h2 {
+  font-size: 23px;
+  line-height: 1.2;
+  margin: 0 0 10px;
+}
 
-  .intro {
-    font-size: 18px;
-    margin-bottom: 26px;
-  }
+h3 {
+  font-size: 18px;
+  margin-top: 0;
+}
 
-  .note {
-    background: #fff8d6;
-    border-left: 5px solid #ffcd00;
-    padding: 14px 16px;
-    margin: 22px 0;
-    border-radius: 4px;
-  }
+.intro {
+  font-size: 18px;
+  margin-bottom: 24px;
+}
 
-  .choices {
-    display: grid;
-    gap: 12px;
-    margin: 22px 0;
-  }
+.note {
+  background: #fff8d6;
+  border-left: 5px solid #ffcd00;
+  padding: 15px 17px;
+  margin: 20px 0;
+  border-radius: 4px;
+}
 
-  button,
-  .resource-link {
-    width: 100%;
-    border: 2px solid #222;
-    background: #fff;
-    color: #222;
-    padding: 16px;
-    border-radius: 9px;
-    font-size: 17px;
-    font-weight: 700;
-    text-align: left;
-    cursor: pointer;
-    text-decoration: none;
-    display: block;
-  }
+.mini-note {
+  background: #f3f3f3;
+  padding: 14px 16px;
+  border-radius: 7px;
+  margin: 18px 0;
+}
 
-  button:hover,
-  button:focus,
-  .resource-link:hover,
-  .resource-link:focus {
-    background: #fff8d6;
-    outline: 3px solid transparent;
-  }
+.choices {
+  display: grid;
+  gap: 11px;
+  margin: 20px 0;
+}
 
-  button.selected {
-    background: #ffcd00;
-    border-color: #000;
-  }
+button,
+.resource-link {
+  width: 100%;
+  border: 2px solid #222;
+  background: #fff;
+  color: #222;
+  padding: 15px 16px;
+  border-radius: 9px;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  font-family: inherit;
+}
 
-  .primary {
-    background: #000;
-    color: #fff;
-    border-color: #000;
-    text-align: center;
-  }
+button:hover,
+button:focus,
+.resource-link:hover,
+.resource-link:focus {
+  background: #fff8d6;
+}
 
-  .primary:hover,
-  .primary:focus {
-    background: #333;
-  }
+button.selected {
+  background: #ffcd00;
+  border-color: #000;
+}
 
-  .secondary {
-    text-align: center;
-  }
+.primary {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+  text-align: center;
+}
 
-  input,
-  textarea {
-    width: 100%;
-    padding: 14px;
-    font-size: 17px;
-    border: 2px solid #777;
-    border-radius: 7px;
-    margin: 8px 0 18px;
-    font-family: inherit;
-  }
+.primary:hover,
+.primary:focus {
+  background: #333;
+  color: #fff;
+}
 
-  label {
-    display: block;
-    font-weight: 700;
-    margin-top: 18px;
-  }
+.secondary {
+  text-align: center;
+}
 
-  .resource {
-    border: 1px solid #ccc;
-    padding: 17px;
-    border-radius: 9px;
-    margin-bottom: 14px;
-  }
+input {
+  width: 100%;
+  padding: 14px;
+  font-size: 17px;
+  border: 2px solid #777;
+  border-radius: 7px;
+  margin: 8px 0 18px;
+  font-family: inherit;
+}
 
-  .resource h3 {
-    margin: 0 0 6px;
-    font-size: 19px;
-  }
+label {
+  display: block;
+  font-weight: 700;
+  margin-top: 18px;
+}
 
-  .resource p {
-    margin: 0 0 12px;
-  }
+.resource {
+  border: 1px solid #ccc;
+  padding: 17px;
+  border-radius: 9px;
+  margin-bottom: 14px;
+  background: #fff;
+}
 
-  .resource-link {
-    padding: 11px 14px;
-    font-size: 16px;
-    background: #ffcd00;
-  }
+.resource h3 {
+  margin-bottom: 5px;
+}
 
-  .small {
-    font-size: 14px;
-    color: #555;
-  }
+.resource p {
+  margin: 0 0 12px;
+}
 
-  .screen {
-    display: none;
-  }
+.resource-link {
+  padding: 11px 14px;
+  font-size: 15px;
+  background: #ffcd00;
+}
 
-  .screen.active {
-    display: block;
-  }
+.screen {
+  display: none;
+}
 
-  .nav {
-    display: flex;
-    gap: 10px;
-    margin-top: 28px;
-  }
+.screen.active {
+  display: block;
+}
 
-  .nav button {
-    text-align: center;
-  }
+.nav {
+  display: flex;
+  gap: 10px;
+  margin-top: 28px;
+}
 
-  .result {
-    background: #f4f4f4;
-    border: 2px solid #222;
-    padding: 20px;
-    border-radius: 9px;
-    font-size: 18px;
-    margin: 22px 0;
-  }
+.nav button {
+  text-align: center;
+}
 
-  .success {
-    display: none;
-    text-align: center;
-    font-weight: 700;
-    margin-top: 10px;
-  }
+.guide-card {
+  border: 2px solid #ddd;
+  border-radius: 9px;
+  padding: 16px;
+  margin-bottom: 11px;
+  cursor: pointer;
+  background: #fff;
+}
 
-  @media (max-width: 600px) {
-    .app { padding: 20px; }
-    .topbar { margin: -20px -20px 24px; }
-    h1 { font-size: 27px; }
-    .nav { flex-direction: column-reverse; }
-  }
+.guide-card:hover {
+  background: #fff8d6;
+}
+
+.guide-card.selected {
+  background: #fff8d6;
+  border-color: #000;
+}
+
+.guide-card strong {
+  display: block;
+  font-size: 17px;
+  margin-bottom: 3px;
+}
+
+.guide-card span {
+  font-size: 15px;
+  color: #444;
+}
+
+.result {
+  background: #f4f4f4;
+  border: 2px solid #222;
+  padding: 20px;
+  border-radius: 9px;
+  font-size: 18px;
+  margin: 22px 0;
+}
+
+.success {
+  display: none;
+  text-align: center;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+.big-question {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 25px 0 14px;
+}
+
+@media (max-width: 600px) {
+  .app { padding: 20px; }
+  .topbar { margin: -20px -20px 24px; }
+  h1 { font-size: 27px; }
+  .nav { flex-direction: column-reverse; }
+}
 </style>
 </head>
 
@@ -205,80 +249,132 @@
 <div class="app">
 <div class="topbar"></div>
 
-<!-- SCREEN 1 -->
+<!-- STEP 1 -->
 <section class="screen active" id="screen1">
 
-  <div class="progress">STEP 1 OF 3</div>
+  <div class="progress">Step 1 of 4</div>
 
-  <h1>Choose one career to explore</h1>
+  <h1>Choose something to explore</h1>
 
   <p class="intro">
-    You are not choosing your future career. You are choosing one possibility worth learning more about.
+    For the next few weeks, you'll use class time to learn more about
+    <strong>one career or industry</strong> that could be worth a closer look.
   </p>
 
-  <h2>Do you already have a career in mind?</h2>
-
-  <div class="choices">
-    <button onclick="showKnownCareer()">Yes — I have one</button>
-    <button onclick="showResources()">Not yet — help me find one</button>
+  <div class="note">
+    <strong>This is not a commitment.</strong><br>
+    You can change your direction at any point if what you learn leads you somewhere else.
+    That is part of career exploration.
   </div>
 
+  <p>
+    Later, you'll also complete <strong>one small activity outside of class</strong> —
+    such as talking with someone, volunteering, attending an event, or observing the work.
+    This tool will help you start thinking about what would actually be useful.
+  </p>
+
+  <p class="big-question">Do you already have something you want to explore?</p>
+
+  <div class="choices">
+    <button onclick="showKnownCareer()">Yes — I have an idea</button>
+    <button onclick="showResources()">Not yet — help me find possibilities</button>
+  </div>
+
+
   <div id="knownCareer" style="display:none;">
-    <label for="career1">What career do you want to research?</label>
-    <input id="career1" type="text" placeholder="Example: school counselor">
+
+    <label for="career1">
+      What career or industry do you want to explore?
+    </label>
+
+    <input id="career1"
+           type="text"
+           placeholder="Examples: school counseling, sports industry, marketing">
 
     <button class="primary" onclick="saveCareer('career1')">
       Continue →
     </button>
+
   </div>
+
 
   <div id="resources" style="display:none;">
 
-    <div class="note">
-      <strong>Choose just one.</strong> Spend a few minutes looking for a career that makes you curious enough to learn more.
+    <div class="mini-note">
+      <strong>You only need one possibility.</strong><br>
+      Pick the resource that best matches where you are right now.
     </div>
 
+
     <div class="resource">
-      <h3>Start Somewhere</h3>
+
+      <h3>I'm not sure where to start</h3>
+
       <p>
-        Best if you're not sure where to begin. React to different kinds of work and get a few directions to explore.
+        Use <strong>Start Somewhere</strong> to react to different kinds of work
+        and identify a few career directions that may be worth exploring.
       </p>
+
       <a class="resource-link"
          href="https://uiowa.instructure.com/courses/287980/pages/find-careers-to-explore"
-         target="_blank" rel="noopener">
+         target="_blank"
+         rel="noopener">
         Open Start Somewhere ↗
       </a>
+
     </div>
 
+
     <div class="resource">
-      <h3>YouScience</h3>
+
+      <h3>I want to use my YouScience results</h3>
+
       <p>
-        Look at careers connected to your results. Use <strong>Career Cluster</strong> on the left side to make the list easier to narrow.
+        Browse careers connected to your results. Use the
+        <strong>Career Cluster filter on the left side</strong>
+        to narrow the list to an area you want to explore.
       </p>
+
       <a class="resource-link"
          href="https://apps.youscience.com/en/careers"
-         target="_blank" rel="noopener">
-        Open My YouScience Careers ↗
+         target="_blank"
+         rel="noopener">
+        Explore YouScience Careers ↗
       </a>
+
     </div>
+
 
     <div class="resource">
-      <h3>What Can I Do With This Major?</h3>
+
+      <h3>I want ideas connected to a major</h3>
+
       <p>
-        Best if you want career ideas related to a major. Open our page, then follow the <strong>What Can I Do With This Major?</strong> link.
+        Use <strong>What Can I Do With This Major?</strong>
+        to see career areas connected to a major you're considering.
+        Start from our Career Center page and follow the link from there.
       </p>
+
       <a class="resource-link"
          href="https://careers.uiowa.edu/explore#wcidwtm"
-         target="_blank" rel="noopener">
+         target="_blank"
+         rel="noopener">
         Explore Careers by Major ↗
       </a>
+
     </div>
 
-    <label for="career2">Found one? What career will you explore?</label>
-    <input id="career2" type="text" placeholder="Enter one career">
+
+    <label for="career2">
+      What career or industry will you explore for now?
+    </label>
+
+    <input id="career2"
+           type="text"
+           placeholder="Enter one career or industry">
 
     <button class="primary" onclick="saveCareer('career2')">
-      I have my career →
+      I have a direction →
     </button>
 
   </div>
@@ -286,59 +382,88 @@
 </section>
 
 
-<!-- SCREEN 2 -->
+<!-- STEP 2 -->
 <section class="screen" id="screen2">
 
-  <div class="progress">STEP 2 OF 3</div>
+  <div class="progress">Step 2 of 4</div>
 
-  <h1>What do you most want to figure out?</h1>
+  <h1>What would make this research useful?</h1>
 
   <p class="intro">
-    Think about what would actually help you decide whether this career deserves another look.
+    You could find hundreds of facts. Focus instead on a question that would help
+    <strong>you decide what to do next.</strong>
+  </p>
+
+  <p class="big-question">
+    What do you most want to understand?
   </p>
 
   <div class="choices" id="goalChoices">
 
-    <button onclick="chooseGoal(this,
-      'what the day-to-day work is really like')">
+    <button onclick="chooseGoal(
+      this,
+      'what the day-to-day work is really like',
+      'job'
+    )">
       What is the day-to-day work really like?
     </button>
 
-    <button onclick="chooseGoal(this,
-      'whether I would enjoy the work')">
-      Would I actually enjoy the work?
+    <button onclick="chooseGoal(
+      this,
+      'whether I would enjoy the work and work environment',
+      'fit'
+    )">
+      Would I actually enjoy this kind of work?
     </button>
 
-    <button onclick="chooseGoal(this,
-      'whether the work environment would fit me')">
-      Would the work environment fit me?
+    <button onclick="chooseGoal(
+      this,
+      'what careers and opportunities exist within this field or industry',
+      'industry'
+    )">
+      What kinds of careers exist in this field or industry?
     </button>
 
-    <button onclick="chooseGoal(this,
-      'what skills and strengths I would use')">
-      What skills or strengths would I use?
+    <button onclick="chooseGoal(
+      this,
+      'how this connects to a major or academic path I am considering',
+      'major'
+    )">
+      How does this connect to a major I'm considering?
     </button>
 
-    <button onclick="chooseGoal(this,
-      'what education or experience I would need')">
-      What preparation would I need?
+    <button onclick="chooseGoal(
+      this,
+      'what education, skills, or experience I would need',
+      'preparation'
+    )">
+      What would I need to do to prepare for it?
     </button>
 
-    <button onclick="chooseGoal(this,
-      'what might make this career a good or poor fit for me')">
-      What might make this a good—or poor—fit?
+    <button onclick="chooseGoal(
+      this,
+      'whether this option fits me better than other possibilities I am considering',
+      'options'
+    )">
+      How does this compare with my other options?
     </button>
 
     <button onclick="showCustomGoal(this)">
-      I want to figure out something else
+      I have a different question
     </button>
 
   </div>
 
   <div id="customGoalWrap" style="display:none;">
-    <label for="customGoal">What do you want to figure out?</label>
-    <input id="customGoal" type="text"
-           placeholder="Write a short question or goal">
+
+    <label for="customGoal">
+      What do you want to figure out?
+    </label>
+
+    <input id="customGoal"
+           type="text"
+           placeholder="Write your main question">
+
   </div>
 
   <div class="nav">
@@ -349,92 +474,259 @@
 </section>
 
 
-<!-- SCREEN 3 -->
+<!-- STEP 3 -->
 <section class="screen" id="screen3">
 
-  <div class="progress">STEP 3 OF 3</div>
+  <div class="progress">Step 3 of 4</div>
 
-  <h1>What could help you decide?</h1>
+  <h1>What could help you answer that?</h1>
 
   <p class="intro">
-    Online research gives you information. A person or experience can help you get closer to what the career is actually like.
+    Your class research will give you a starting point. Your small
+    <strong>outside-of-class activity</strong> can help you get information
+    that's harder to find online.
   </p>
 
-  <h2>Which kind of next step sounds most useful?</h2>
+  <div id="goalReminder" class="note"></div>
+
+  <p class="big-question">
+    Would it be more useful to learn from a person or from an experience?
+  </p>
 
   <div class="choices">
+
     <button id="personBtn" onclick="chooseNextType('person')">
-      👤 Learn from a person
+      👤 Talk with someone
     </button>
 
     <button id="experienceBtn" onclick="chooseNextType('experience')">
-      🚶 Learn from an experience
+      🚶 Try, observe, or attend something
     </button>
+
   </div>
 
+
+  <!-- PERSON GUIDE -->
   <div id="personArea" style="display:none;">
-    <div class="note">
-      Examples: a professional, alum, professor, someone you know, or someone working at an organization that interests you.
+
+    <h2>Who could help with your question?</h2>
+
+    <p>
+      Different people are useful for different kinds of questions.
+      Choose the one that seems most helpful right now.
+    </p>
+
+
+    <div class="guide-card"
+         onclick="choosePerson(this,'an academic advisor')">
+
+      <strong>Academic advisor</strong>
+
+      <span>
+        Helpful if you're exploring a <strong>major, minor, courses, requirements,
+        or how an academic option could connect to your goals.</strong>
+      </span>
+
     </div>
+
+
+    <div class="guide-card"
+         onclick="choosePerson(this,'a professor or instructor')">
+
+      <strong>Professor or instructor</strong>
+
+      <span>
+        Helpful if you want to understand a <strong>field of study, subject area,
+        research area, graduate path, or what people do with expertise in that field.</strong>
+      </span>
+
+    </div>
+
+
+    <div class="guide-card"
+         onclick="choosePerson(this,'a professional or alum working in the field')">
+
+      <strong>Professional or alum</strong>
+
+      <span>
+        Helpful if you want the inside view of a <strong>specific job or industry —
+        daily work, work environment, skills, challenges, career paths, or how someone got started.</strong>
+      </span>
+
+    </div>
+
+
+    <div class="guide-card"
+         onclick="choosePerson(this,'a career coach')">
+
+      <strong>Career coach</strong>
+
+      <span>
+        Helpful if you are <strong>still sorting through options, comparing possibilities,
+        figuring out what information you need next, or finding someone to connect with.</strong>
+      </span>
+
+    </div>
+
+
+    <div class="guide-card"
+         onclick="choosePerson(this,'someone I already know who has experience related to this area')">
+
+      <strong>Someone you already know</strong>
+
+      <span>
+        Helpful when a friend, family member, coworker, supervisor, or other connection
+        has experience that could give you a useful perspective.
+      </span>
+
+    </div>
+
 
     <label for="personText">
-      Who could you learn from?
+      Who might you talk with?
     </label>
 
-    <input id="personText" type="text"
-           placeholder="Example: a school counselor">
+    <input id="personText"
+           type="text"
+           placeholder="You can keep the suggestion or make it more specific">
+
   </div>
 
+
+  <!-- EXPERIENCE GUIDE -->
   <div id="experienceArea" style="display:none;">
-    <div class="note">
-      Examples: job shadowing, volunteering, a related job, research, a student organization, an employer event, or a small related project.
+
+    <h2>What kind of experience would help?</h2>
+
+    <p>
+      You do not need a big internship to test an idea. A small experience can give you useful information.
+    </p>
+
+
+    <div class="guide-card"
+         onclick="chooseExperience(this,'job shadowing or observing someone at work')">
+
+      <strong>Job shadow or observe</strong>
+
+      <span>
+        Best when you want to see the <strong>day-to-day work,
+        environment, pace, and interactions</strong> for yourself.
+      </span>
+
     </div>
 
+
+    <div class="guide-card"
+         onclick="chooseExperience(this,'volunteering in a related setting')">
+
+      <strong>Volunteer</strong>
+
+      <span>
+        Useful for testing your interest in a <strong>population, cause,
+        setting, or type of work</strong> without a long commitment.
+      </span>
+
+    </div>
+
+
+    <div class="guide-card"
+         onclick="chooseExperience(this,'attending a related event, employer visit, or program')">
+
+      <strong>Attend an event or visit</strong>
+
+      <span>
+        Useful for getting exposure to an <strong>industry, organization,
+        employer, or professional community</strong>.
+      </span>
+
+    </div>
+
+
+    <div class="guide-card"
+         onclick="chooseExperience(this,'trying a small project or activity related to the work')">
+
+      <strong>Try a small project</strong>
+
+      <span>
+        Useful when you want to test whether you enjoy a
+        <strong>skill or task</strong> that is common in the career.
+      </span>
+
+    </div>
+
+
+    <div class="guide-card"
+         onclick="chooseExperience(this,'joining or attending a related student organization activity')">
+
+      <strong>Explore a student organization</strong>
+
+      <span>
+        Useful for learning more about a field, meeting others with similar interests,
+        and seeing what related experiences are available.
+      </span>
+
+    </div>
+
+
     <label for="experienceText">
-      What experience could help?
+      What experience might you try?
     </label>
 
-    <input id="experienceText" type="text"
-           placeholder="Example: shadow a physical therapist">
+    <input id="experienceText"
+           type="text"
+           placeholder="You can keep the suggestion or make it more specific">
+
   </div>
+
 
   <div class="nav">
     <button class="secondary" onclick="goTo(2)">← Back</button>
-    <button class="primary" onclick="createPlan()">Build My Plan →</button>
+    <button class="primary" onclick="saveNextStep()">Continue →</button>
   </div>
 
 </section>
 
 
-<!-- FINAL SCREEN -->
+<!-- STEP 4 -->
 <section class="screen" id="screen4">
 
-  <div class="progress">YOUR PLAN</div>
+  <div class="progress">Step 4 of 4</div>
 
-  <h1>You have a next step.</h1>
+  <h1>Your starting plan</h1>
 
   <p class="intro">
-    You do not have to know whether this career is right for you yet. This gives you something specific to investigate.
+    This is your direction for now — not a final decision.
   </p>
 
-  <div class="result" id="resultText"></div>
+  <div class="result" id="resultText" aria-live="polite"></div>
 
   <button class="primary" onclick="copyPlan()">
-    Copy My Response
+    Copy My Plan
   </button>
 
   <div class="success" id="copySuccess">
-    ✓ Copied! Paste this into your assignment.
+    ✓ Copied! Paste this into your class assignment.
   </div>
+
 
   <div class="note">
-    What you learn might make you <strong>more interested</strong>,
-    <strong>less interested</strong>, or <strong>still unsure</strong>.
-    All three give you useful information.
+
+    <strong>What happens next?</strong><br><br>
+
+    Over the next few weeks, you'll research this career or industry in class.
+    You can switch directions if what you learn changes your thinking.
+
+    <br><br>
+
+    You'll also choose <strong>one small outside-of-class step</strong>
+    that can help answer your question. The person or experience you identified
+    today is a possible starting point — you are not locked into it.
+
   </div>
 
-  <p style="text-align:center; font-size:18px;">
-    <strong>Explore → Take a step → Notice → Re-evaluate</strong>
+
+  <p style="text-align:center; font-size:18px; margin-top:28px;">
+    <strong>Explore → Learn → Take a step → Re-evaluate</strong>
   </p>
 
   <button class="secondary" onclick="startOver()">
@@ -447,27 +739,33 @@
 
 
 <script>
+
 let career = "";
 let goal = "";
+let goalCategory = "";
 let nextType = "";
 let nextStep = "";
 let customGoalSelected = false;
+
 
 function showKnownCareer() {
   document.getElementById("knownCareer").style.display = "block";
   document.getElementById("resources").style.display = "none";
 }
 
+
 function showResources() {
   document.getElementById("resources").style.display = "block";
   document.getElementById("knownCareer").style.display = "none";
 }
 
+
 function saveCareer(id) {
+
   const value = document.getElementById(id).value.trim();
 
   if (!value) {
-    alert("Enter one career before continuing.");
+    alert("Enter one career or industry before continuing.");
     return;
   }
 
@@ -475,28 +773,39 @@ function saveCareer(id) {
   goTo(2);
 }
 
-function chooseGoal(button, value) {
+
+function chooseGoal(button, value, category) {
+
   document.querySelectorAll("#goalChoices button").forEach(btn => {
     btn.classList.remove("selected");
   });
 
   button.classList.add("selected");
+
   goal = value;
+  goalCategory = category;
   customGoalSelected = false;
+
   document.getElementById("customGoalWrap").style.display = "none";
 }
 
+
 function showCustomGoal(button) {
+
   document.querySelectorAll("#goalChoices button").forEach(btn => {
     btn.classList.remove("selected");
   });
 
   button.classList.add("selected");
+
   goal = "";
+  goalCategory = "custom";
   customGoalSelected = true;
+
   document.getElementById("customGoalWrap").style.display = "block";
   document.getElementById("customGoal").focus();
 }
+
 
 function saveGoal() {
 
@@ -509,10 +818,15 @@ function saveGoal() {
     return;
   }
 
+  document.getElementById("goalReminder").innerHTML =
+    "<strong>Your question:</strong><br>You want to understand " + goal + ".";
+
   goTo(3);
 }
 
+
 function chooseNextType(type) {
+
   nextType = type;
 
   document.getElementById("personBtn").classList.remove("selected");
@@ -522,70 +836,168 @@ function chooseNextType(type) {
   document.getElementById("experienceArea").style.display = "none";
 
   if (type === "person") {
+
     document.getElementById("personBtn").classList.add("selected");
     document.getElementById("personArea").style.display = "block";
-    document.getElementById("personText").focus();
+
+    suggestPerson();
+
   } else {
+
     document.getElementById("experienceBtn").classList.add("selected");
     document.getElementById("experienceArea").style.display = "block";
-    document.getElementById("experienceText").focus();
+
   }
 }
 
-function createPlan() {
+
+function suggestPerson() {
+
+  let suggestion = "";
+
+  if (goalCategory === "major") {
+    suggestion = "an academic advisor";
+  }
+
+  else if (goalCategory === "job" || goalCategory === "industry") {
+    suggestion = "a professional or alum working in the field";
+  }
+
+  else if (goalCategory === "options") {
+    suggestion = "a career coach";
+  }
+
+  else if (goalCategory === "preparation") {
+    suggestion = "a professional, professor, or career coach";
+  }
+
+  if (suggestion) {
+    document.getElementById("personText").value = suggestion;
+  }
+}
+
+
+function clearGuideSelections(area) {
+
+  document.querySelectorAll("#" + area + " .guide-card").forEach(card => {
+    card.classList.remove("selected");
+  });
+}
+
+
+function choosePerson(card, value) {
+
+  clearGuideSelections("personArea");
+
+  card.classList.add("selected");
+
+  document.getElementById("personText").value = value;
+}
+
+
+function chooseExperience(card, value) {
+
+  clearGuideSelections("experienceArea");
+
+  card.classList.add("selected");
+
+  document.getElementById("experienceText").value = value;
+}
+
+
+function saveNextStep() {
 
   if (!nextType) {
-    alert("Choose a person or an experience.");
+    alert("Choose whether a person or experience would be more useful.");
     return;
   }
 
   if (nextType === "person") {
     nextStep = document.getElementById("personText").value.trim();
-  } else {
+  }
+
+  else {
     nextStep = document.getElementById("experienceText").value.trim();
   }
 
   if (!nextStep) {
-    alert("Add a short description of your next step.");
+    alert("Choose or enter one possible next step.");
     return;
   }
 
+  createPlan();
+}
+
+
+function createPlan() {
+
+  let stepPhrase = "";
+
+  if (nextType === "person") {
+    stepPhrase = "One person who could help me learn more is " + nextStep;
+  }
+
+  else {
+    stepPhrase = "One experience that could help me learn more is " + nextStep;
+  }
+
   const plan =
-    `I'm researching ${career} because I want to figure out ${goal}. ` +
-    `One ${nextType} that could help me decide whether to keep exploring this career is ${nextStep}.`;
+    "I'm exploring " + career +
+    " because I want to understand " + goal +
+    ". " + stepPhrase +
+    ". This could help me decide whether I want to keep exploring this direction.";
 
   document.getElementById("resultText").textContent = plan;
 
   goTo(4);
 }
 
+
 function copyPlan() {
+
   const text = document.getElementById("resultText").textContent;
 
   navigator.clipboard.writeText(text).then(() => {
     document.getElementById("copySuccess").style.display = "block";
   });
+
 }
 
+
 function goTo(number) {
+
   document.querySelectorAll(".screen").forEach(screen => {
     screen.classList.remove("active");
   });
 
   document.getElementById("screen" + number).classList.add("active");
-  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 }
 
+
 function startOver() {
+
   career = "";
   goal = "";
+  goalCategory = "";
   nextType = "";
   nextStep = "";
   customGoalSelected = false;
 
-  document.querySelectorAll("input").forEach(input => input.value = "");
+  document.querySelectorAll("input").forEach(input => {
+    input.value = "";
+  });
+
   document.querySelectorAll("button").forEach(button => {
     button.classList.remove("selected");
+  });
+
+  document.querySelectorAll(".guide-card").forEach(card => {
+    card.classList.remove("selected");
   });
 
   document.getElementById("knownCareer").style.display = "none";
@@ -597,6 +1009,7 @@ function startOver() {
 
   goTo(1);
 }
+
 </script>
 
 </body>
