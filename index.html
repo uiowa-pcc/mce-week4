@@ -202,6 +202,19 @@ label {
   border-color: #000;
 }
 
+.tailored-panel { background:#f7f7f7; border:1px solid #d5d5d5; border-radius:10px; padding:18px; margin:19px 0; }
+.tailored-panel h3 { margin:0 0 5px; }
+.tailored-panel > p { margin:0 0 12px; font-size:15px; }
+.suggestion { background:white; border:1px solid #d4d4d4; border-radius:8px; padding:14px; margin:10px 0; }
+.suggestion strong { display:block; margin-bottom:5px; }
+.suggestion p { margin:0 0 9px; font-size:15px; }
+.suggestion button { width:auto; padding:8px 11px; font-size:14px; display:inline-block; margin:3px 8px 3px 0; }
+.suggestion a { display:inline-block; font-size:14px; font-weight:700; color:#1b4a70; margin:5px 12px 3px 0; }
+.suggestion.is-picked { border:2px solid #222; background:#fff9df; }
+.find-links { margin-top:20px; }
+.find-links a { display:block; margin:9px 0; color:#174b70; font-weight:700; }
+.small-print { color:#555; font-size:14px; }
+
 .guide-card strong {
   display: block;
   font-size: 17px;
@@ -516,6 +529,8 @@ label {
       Choose the one that seems most helpful right now.
     </p>
 
+    <div class="tailored-panel" id="personSuggestions" aria-live="polite"></div>
+
 
     <div class="guide-card"
          onclick="choosePerson(this,'an academic advisor')">
@@ -601,6 +616,8 @@ label {
     <p>
       You do not need a big internship to test an idea. A small experience can give you useful information.
     </p>
+
+    <div class="tailored-panel" id="experienceSuggestions" aria-live="polite"></div>
 
 
     <div class="guide-card"
@@ -700,6 +717,8 @@ label {
 
   <div class="result" id="resultText" aria-live="polite"></div>
 
+  <div id="planResources" class="tailored-panel"></div>
+
   <button class="primary" onclick="copyPlan()">
     Copy My Plan
   </button>
@@ -746,6 +765,89 @@ let goalCategory = "";
 let nextType = "";
 let nextStep = "";
 let customGoalSelected = false;
+let selectedSuggestion = null;
+
+const SOURCES = {
+  handshake: {label:'Handshake jobs and events',url:'https://careers.uiowa.edu/handshake'},
+  events: {label:'Pomerantz Career Center events',url:'https://careers.uiowa.edu/upcoming-events'},
+  shadow: {label:'HawkShadow job shadow program',url:'https://careers.uiowa.edu/hawkshadow'},
+  conversations: {label:'Informational interview guidance',url:'https://careers.uiowa.edu/informational-interviews'},
+  engage: {label:'Browse student organizations and opportunities',url:'https://engage.uiowa.edu/browse'},
+  volunteer: {label:'Volunteer and service opportunities',url:'https://careers.uiowa.edu/volunteer'},
+  research: {label:'Open undergraduate research positions',url:'https://our.research.uiowa.edu/students/open-research-positions'},
+  advising: {label:'Academic Advising Center',url:'https://advisingcenter.uiowa.edu/'},
+  majors: {label:'University of Iowa majors and programs',url:'https://catalog.registrar.uiowa.edu/undergraduate/'},
+  coaching: {label:'Meet with a career coach',url:'https://careers.uiowa.edu/appointments'}
+};
+
+function careerFocus() {
+  const c = career.toLowerCase();
+  const groups = [
+    {pattern:/teach|school|educat|child|youth|counsel|social work|psycholog|therapy/,name:'education, youth, or helping professions', action:'help with tutoring, mentoring, youth programs, or community support', project:'design a short learning activity or resource for a specific audience', search:'tutoring, mentoring, youth programs, counseling'},
+    {pattern:/health|nurs|medic|physic|hospital|dent|patient|rehab|public health/,name:'health and patient services',action:'support a community health, wellness, or patient-facing nonprofit event',project:'create a short public health education resource based on a credible source',search:'health, hospital, wellness, patient services'},
+    {pattern:/business|market|finance|account|entrepren|sales|management|human resource/,name:'business and organizations',action:'help with a nonprofit outreach, fundraising, or event-planning task',project:'draft a simple marketing campaign or compare how two organizations reach customers',search:'marketing, finance, business, entrepreneurship'},
+    {pattern:/comput|software|data|engineer|technolog|cyber|design|ux/,name:'technology, design, or engineering',action:'assist an organization with a website, data, or technology-related need',project:'build a small prototype, dashboard, or design mockup that solves a real problem',search:'technology, coding, engineering, UX'},
+    {pattern:/law|politic|government|policy|crimin|justice|public service/,name:'law, policy, and public service',action:'volunteer with a civic-engagement or community-service organization',project:'write a one-page brief comparing two approaches to a community issue',search:'policy, pre-law, government, public service'},
+    {pattern:/art|music|film|theat|writ|journal|media|communicat|graphic|sport/,name:'creative, media, or sports fields',action:'help with a campus event, publication, performance, or community program',project:'create a portfolio sample such as an article, design, short video, or event concept',search:'media, arts, communication, sports'}
+  ];
+  return groups.find(g=>g.pattern.test(c)) || {name:'your field of interest',action:'volunteer with an organization connected to this field',project:'complete one small sample task that someone in the field might do',search:career};
+}
+
+function idea(title, detail, step, sources) { return {title,detail,step,sources}; }
+
+function buildSuggestions(type) {
+  const f = careerFocus(), topic = career;
+  const contact = idea('Talk to someone doing this work',`Ask a ${topic} professional what a typical week looks like, what surprises them, and what they wish they had known.`,`Reach out to one professional or Iowa alum and request a 15–20 minute conversation.`,['conversations','coaching']);
+  const academic = idea('Compare the academic routes',`Ask an advisor which majors, courses, or related programs might connect to ${topic}.`,`Bring two possible courses or majors to an advising conversation.`,['advising','majors']);
+  const coach = idea('Talk through the possibilities with a career coach',`Discuss what you want to learn about ${topic} and identify one useful source of firsthand evidence.`,`Schedule a coaching conversation and bring your main question.`,['coaching','conversations']);
+  const prof = idea('Ask a professor about the field',`Contact an instructor whose teaching or research connects with ${topic}; ask what students can explore early.`,`Find a department faculty page and send one brief question or office-hours request.`,['majors','research']);
+  const visit = idea('Observe the work through HawkShadow',`Look for an opportunity to see the pace, tasks, and work setting in ${topic}.`,`Search HawkShadow on Handshake; if nothing fits, ask a professional about a brief observation.`,['shadow','handshake']);
+  const event = idea('Attend a career event or employer session',`Meet people in or near ${topic} and ask what different roles actually involve.`,`Browse upcoming Career Center or Handshake events and pick one relevant session.`,['events','handshake']);
+  const organization = idea('Attend a related student organization event',`Search Engage for “${f.search}” and attend an open meeting or activity to hear about roles and projects.`,`Find one related organization on Engage and check its upcoming events.`,['engage']);
+  const volunteer = idea('Try a short volunteer activity',`Look for a chance to ${f.action}; notice which parts feel engaging.`,`Use the volunteer directory to identify one organization and ask about a one-time opportunity.`,['volunteer','engage']);
+  const project = idea('Test a real task with a small project',`Try this sample of ${f.name}: ${f.project}.`,`Choose a 30–60 minute version and reflect on what you liked and found difficult.`,['engage','research']);
+  const research = idea('Explore undergraduate research or creative work',`Look for faculty projects related to ${topic}, including projects that cross disciplines.`,`Browse open research positions or email a relevant instructor to ask about ways to contribute.`,['research','majors']);
+  const internship = idea('Look at entry-level roles and internships',`Search ${topic} in Handshake to see how roles differ in tasks, requirements, and settings.`,`Save two postings with different job titles and compare their responsibilities.`,['handshake']);
+
+  const matrix = {
+    job:{person:[contact,prof,coach],experience:[visit,event,volunteer]},
+    fit:{person:[contact,coach,prof],experience:[volunteer,project,visit]},
+    industry:{person:[contact,coach,prof],experience:[event,organization,internship]},
+    major:{person:[academic,prof,coach],experience:[organization,research,event]},
+    preparation:{person:[contact,prof,academic],experience:[internship,project,research]},
+    options:{person:[coach,contact,academic],experience:[event,organization,volunteer]},
+    custom:{person:[contact,coach,academic],experience:[visit,organization,project]}
+  };
+  return matrix[goalCategory]?.[type] || matrix.custom[type];
+}
+
+function safeText(s) {return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+function sourceLinks(keys) {
+  return keys.map(k=>`<a href="${SOURCES[k].url}" target="_blank" rel="noopener noreferrer">${safeText(SOURCES[k].label)} ↗</a>`).join('');
+}
+
+function renderSuggestions(type) {
+  const options = buildSuggestions(type), target=document.getElementById(type+'Suggestions');
+  target.innerHTML=`<h3>Ideas tailored to your question</h3><p>For <strong>${safeText(career)}</strong>, these are practical starting points. Choose one or write your own idea below; availability will vary.</p>`+
+    options.map((x,i)=>`<div class="suggestion" id="idea-${type}-${i}"><strong>${safeText(x.title)}</strong><p>${safeText(x.detail)}</p><p class="small-print"><strong>First step:</strong> ${safeText(x.step)}</p><button type="button" onclick="pickSuggestion('${type}',${i})">Use this idea</button><div>${sourceLinks(x.sources)}</div></div>`).join('');
+}
+
+function pickSuggestion(type,index) {
+  const x=buildSuggestions(type)[index];
+  selectedSuggestion={type,...x};
+  const input=document.getElementById(type==='person'?'personText':'experienceText');
+  input.value=x.step;
+  document.querySelectorAll('#'+type+'Suggestions .suggestion').forEach((el,i)=>el.classList.toggle('is-picked',i===index));
+  clearGuideSelections(type+'Area');
+}
+
+['personText','experienceText'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',()=>{
+    selectedSuggestion=null;
+    document.querySelectorAll('.suggestion').forEach(el=>el.classList.remove('is-picked'));
+  });
+});
 
 
 function showKnownCareer() {
@@ -819,7 +921,7 @@ function saveGoal() {
   }
 
   document.getElementById("goalReminder").innerHTML =
-    "<strong>Your question:</strong><br>You want to understand " + goal + ".";
+    "<strong>Your question:</strong><br>You want to understand " + safeText(goal) + ".";
 
   goTo(3);
 }
@@ -828,6 +930,7 @@ function saveGoal() {
 function chooseNextType(type) {
 
   nextType = type;
+  selectedSuggestion = null;
 
   document.getElementById("personBtn").classList.remove("selected");
   document.getElementById("experienceBtn").classList.remove("selected");
@@ -848,6 +951,7 @@ function chooseNextType(type) {
     document.getElementById("experienceArea").style.display = "block";
 
   }
+  renderSuggestions(type);
 }
 
 
@@ -887,6 +991,8 @@ function clearGuideSelections(area) {
 
 function choosePerson(card, value) {
 
+  selectedSuggestion = null;
+
   clearGuideSelections("personArea");
 
   card.classList.add("selected");
@@ -896,6 +1002,8 @@ function choosePerson(card, value) {
 
 
 function chooseExperience(card, value) {
+
+  selectedSuggestion = null;
 
   clearGuideSelections("experienceArea");
 
@@ -949,13 +1057,21 @@ function createPlan() {
 
   document.getElementById("resultText").textContent = plan;
 
+  const keys=selectedSuggestion && selectedSuggestion.type===nextType
+    ? selectedSuggestion.sources
+    : nextType==='person' ? ['conversations','coaching','advising'] : ['shadow','engage','volunteer','events'];
+  const first=selectedSuggestion && selectedSuggestion.type===nextType ? selectedSuggestion.step : nextStep;
+  document.getElementById('planResources').innerHTML=
+    '<h3>Where to start</h3><p><strong>Your first action:</strong> '+safeText(first)+'</p><div class="find-links">'+sourceLinks(keys)+'</div><p class="small-print">These links are places to look, not guaranteed openings. If your first choice is unavailable, try a similar organization or ask a career coach for help.</p>';
+
   goTo(4);
 }
 
 
 function copyPlan() {
 
-  const text = document.getElementById("resultText").textContent;
+  const keys=selectedSuggestion && selectedSuggestion.type===nextType ? selectedSuggestion.sources : nextType==='person' ? ['conversations','coaching','advising'] : ['shadow','engage','volunteer','events'];
+  const text = document.getElementById("resultText").textContent + '\n\nWhere to start:\n' + keys.map(k=>SOURCES[k].label+': '+SOURCES[k].url).join('\n');
 
   navigator.clipboard.writeText(text).then(() => {
     document.getElementById("copySuccess").style.display = "block";
@@ -987,6 +1103,7 @@ function startOver() {
   nextType = "";
   nextStep = "";
   customGoalSelected = false;
+  selectedSuggestion = null;
 
   document.querySelectorAll("input").forEach(input => {
     input.value = "";
